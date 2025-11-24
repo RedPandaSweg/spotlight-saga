@@ -1,0 +1,25 @@
+{
+    "name": "spotlight-saga",
+    "title": "Spotlight Saga",
+    "description": "A system for playing Spotlight Saga",
+    "author": "RedPandaSweg",
+    "version": 0.01,
+    "minimumCoreVersion": "13.351",
+    "compatibleCoreVersion": "13.351",
+    "esmodules": [
+        "spotlightsaga.js"
+    ],
+    "styles":[
+        "spotlightsaga.css"
+    ],
+    "packs": [
+
+    ],
+    "languages":[
+
+    ],
+    "gridDistance": 1,
+    "gridUnits": "m",
+    "primaryTokenAttribute": "PA",
+    "initiative": "1d20"
+}
