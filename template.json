@@ -1,11 +1,49 @@
 {
-    "Actor":{},
-    "Item":{
-        "types":[
-            "weapon"
+    "Actor": {
+
+        "types": [
+            "PC"
         ],
-        "weapon":{
-            "description":0
+
+        "PC": {
+
+            "name": "",
+            "role": "",
+            "roleUsed": false,
+            "spotlights": 3,
+            "criticalSpotlightGained": false,
+            "edges":[],
+            "flaws":[],
+
+            "skills":{
+                "arcana": 0,
+                "athletics": 0
+            },
+
+            "plotArmor": ""
+
+        },
+
+        "bonusUsed": false
+    },
+
+    "Item": {
+
+        "types":[
+            "Item"
+        ],
+
+        "templates": {
+
+            "generalItems": {
+                "description": ""
+            }
+        },
+
+        "Item": {
+            "templates": ["generalItems"],
+            "type": "item",
+            "quantity": 1
         }
     }
 }

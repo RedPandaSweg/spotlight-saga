@@ -1,0 +1,64 @@
+{{!-- spell.hbs --}}
+<section class="ss-spell-builder">
+	<header class="ss-spell-header">
+	</header>
+
+	<div class="ss-spell-main">
+
+		<div class="ss-scrabble-area">
+            <div class="ss-scrabble-controls">
+                <div class="ss-spell-skill-select">
+                    <label>
+                        <select name="system.spell.skill" class="ss-skill-select" data-field="skill">
+                        <option value="">– Choose a Skill –</option>
+                        {{#each config.skills as |skill|}}
+                            <option value="{{skill.key}}"{{#if (eq ../system.spell.skill skill.key)}}selected{{/if}}>
+                            {{skill.label}}
+                            </option>
+                        {{/each}}
+                        </select>
+                    </label>
+                </div>
+				<button type="button" class="ss-btn" data-action="draw">Draw</button>
+				<button type="button" class="ss-btn" data-action="clear">Clear Rack</button>
+				<button type="button" class="ss-btn" data-action="suggest">Suggest Words</button>
+			</div>
+
+			<div class="ss-tile-rack" role="list" aria-label="Scrabble tile rack" data-tiles="">
+				<!-- Tiles will be rendered here by scrabble.js. Each tile element should have class `ss-tile` and a `data-letter` attribute. -->
+			</div>
+
+			<div class="ss-composed-area">
+                <strong>Composed:</strong>
+				<div class="ss-composed-display">
+					<span class="ss-composed-word" aria-live="polite"></span>
+					<span class="ss-composed-score"></span>
+				</div>
+                <strong>Suggestions:</strong>
+				<div class="ss-suggestions">
+					<ol class="ss-suggestion-listDE"></ol>
+                    <ol class="ss-suggestion-listEN"></ol>
+				</div>
+			</div>
+
+			<div class="ss-spell-actions">
+				<button type="button" class="ss-btn ss-btn-primary" data-action="to-chat">Send Spell to Chat</button>
+				<button type="button" class="ss-btn" data-action="save-spell">Save Spell</button>
+			</div>
+		</div>
+	</div>
+
+	<template id="ss-tile-template">
+		<button type="button" class="ss-tile" data-letter="{{letter}}" title="{{letter}}">{{letter}}</button>
+	</template>
+</section>
+
+<!--
+	Usage notes for developers:
+	- Render tiles into `.ss-tile-rack` as buttons with class `ss-tile` and a `data-letter` attribute.
+	- Hooks expected by `module/scrabble.js` (or a sheet script):
+		- Buttons with `data-action="draw"` should trigger a tile draw and render returned tiles.
+		- `data-action="suggest"` should call `findPlayableWords` using current tiles and fill `.ss-suggestion-list`.
+		- Clicking a `.ss-tile` should toggle selection/compose state; the composed word text should be placed into `.ss-composed-word` and score into `.ss-composed-score` (use `scoreWord`).
+		- `data-action="to-chat"` should assemble the spell name, composed word, and description into an HTML snippet and call `ChatMessage.create(...)`.
+-->

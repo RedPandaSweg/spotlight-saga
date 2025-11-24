@@ -1,0 +1,15 @@
+{
+    "SIDEBAR.ACTIONS.CREATE": {
+  "Actor": "Create Actor",
+  "Adventure": "Create Adventure",
+  "Cards": "Create Card Stack",
+  "Compendium": "Create Compendium",
+  "Folder": "Create Folder",
+  "Item": "Create Item",
+  "JournalEntry": "Create Entry",
+  "Macro": "Create Macro",
+  "Playlist": "Create Playlist",
+  "RollTable": "Create Table",
+  "Scene": "Create Scene"
+    }
+}

@@ -1,0 +1,68 @@
+<section class="ss-char-main">
+
+  {{!-- background behind everything --}}
+  <div class="ss-char-bg">
+    <img
+      src="systems/spotlight-saga/assets/images/SpotlightBackground.webp"
+      alt="Spotlight background"
+    />
+  </div>
+  
+  <div class="ss-sheet-body">
+    <section class="ss-sheet-header">
+      {{!-- NameTag --}}  
+      <div class="ss-name-entry">
+        <input type="text"
+                name="name"
+                value="{{actor.name}}"
+                placeholder="Character Name">
+      </div>
+      <div class="ss-role-entry">
+        {{#if system.bio.role}}
+          <span class="ss-role-as">as </span> {{system.bio.role}}
+        {{/if}}
+      </div>
+    </section>
+
+    {{!-- TAB BAR --}}
+    <nav class="ss-tabs tabs" data-group="primary">
+      <a class="item" data-tab="main">Character</a>
+      <a class="item" data-tab="skills">Skills</a>
+      <a class="item" data-tab="spell">Spell</a>
+      <a class="item" data-tab="inventory">Inventory</a>
+      <a class="item" data-tab="bio">Bio</a>
+      <a class="item" data-tab="notes">Notes</a>
+    </nav>
+
+    {{!-- TAB CONTENT CONTAINER --}}
+    <section class="ss-tab-content content">
+
+      {{!-- TAB 1: MAIN CHARACTER --}}
+
+      <section class="tab" data-tab="main">{{> "systems/spotlight-saga/templates/partials/main.hbs"}}</section>
+
+      {{!-- TAB 2: SKILLS --}}
+
+      <section class="tab" data-tab="skills">{{> "systems/spotlight-saga/templates/partials/skills.hbs"}}</section>
+
+      {{!-- TAB 2.5: Spell --}}
+
+      <section class="tab" data-tab="spell">{{> "systems/spotlight-saga/templates/partials/spell.hbs"}}</section>
+
+      {{!-- TAB 3: Inventory --}}
+
+      <section class="tab" data-tab="inventory">{{> "systems/spotlight-saga/templates/partials/inventory.hbs"}}</section>
+
+      {{!-- TAB 4: Bio --}}
+
+      <section class="tab" data-tab="bio">{{> "systems/spotlight-saga/templates/partials/bio.hbs"}}</section>
+
+      {{!-- TAB 5: Notes --}}
+
+      <section class="tab" data-tab="notes">{{> "systems/spotlight-saga/templates/partials/notes.hbs"}}</section>
+
+
+    </section> {{!-- end .content --}}
+  </div> {{!-- end .ss-sheet-body --}}
+
+</section>

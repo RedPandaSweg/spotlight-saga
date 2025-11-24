@@ -1,0 +1,1396 @@
+/* =========================================
+   FONTS
+   ========================================= */
+
+@font-face {
+  font-family: "SpotLights";
+  src: url("assets/fonts/SpotLights.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("assets/fonts/Nunito.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("assets/fonts/Oswald.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* =========================================
+   ROOT SHEET + GLOBAL OVERRIDES
+   ========================================= */
+
+/* Expose Spotlight Saga CSS variables globally so chat and other UI can reuse them */
+:root {
+  --ss-bg: #4a4a4a;
+  --ss-lightbg: rgba(130, 130, 130, 0.9);
+  --ss-border: #eee88b;
+  --ss-text: #FFF000;
+  --ss-selected: #FFF000;
+  --ss-padding: 6px;
+  --ss-strongGlow: 
+    0 0 4px   var(--ss-selected),
+    0 0 8px   var(--ss-selected),
+    0 0 12px  var(--ss-selected);
+  --ss-lightGlow: 
+    0 0 4px   var(--ss-border),
+    0 0 8px   var(--ss-border),
+    0 0 12px  var(--ss-selected);
+  --ss-darkGlow: 
+    0 0 4px   #000,
+    0 0 8px   #000,
+    0 0 12px  var(--ss-selected);
+}
+/* Global Overrides */
+body.theme-dark,
+body.theme-light {
+  --ss-roll-card-bg: rgba(0,0,0,0.45) !important;
+  --ss-roll-accent: var(--ss-border) !important;
+
+  --color-scrollbar: var(--ss-selected) !important;
+}
+
+body.theme-dark input[type=checkbox],
+body.theme-light input[type=checkbox]{
+--checkbox-checked-color: var(--ss-selected) !important;
+}
+
+/* Webkit browsers (Chrome/Edge/Safari) */
+.spotlightsaga {
+  --scrollbarBG: var(--ss-bg);
+  --thumbBG: var(--ss-selected);
+}
+
+/* Increase specificity */
+.spotlightsaga.application::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.spotlightsaga.application::-webkit-scrollbar-track {
+  background: var(--scrollbarBG) !important;
+}
+
+.spotlightsaga.application::-webkit-scrollbar-thumb {
+  background: var(--thumbBG) !important;
+  border-radius: 4px !important;
+}
+
+.spotlightsaga.application::-webkit-scrollbar-thumb:hover {
+  background: var(--ss-border) !important;
+}
+
+/* Firefox */
+.spotlightsaga.application {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG) !important;
+}
+
+body.theme-dark .button,
+body.theme-dark button,
+body.theme-dark a.button {
+  --button-hover-background-color: var(--ss-border) !important;
+  --button-hover-border-color: var(--ss-selected) !important;
+  --button-hover-text-color: #000 !important;
+}
+
+
+/* Root sheet styling */
+.spotlightsaga.sheet.characterSheet {
+  font-family: "Oswald", sans-serif;
+  color: var(--ss-selected);
+  text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet textarea {
+  white-space: pre-wrap;
+}
+
+/* Remove padding from all app windows */
+.application .window-content {
+  padding: 0;
+}
+
+@keyframes ss-glow-pulse {
+  0% {
+    text-shadow:
+      0 0 3px  var(--ss-border),
+      0 0 6px  var(--ss-border),
+      0 0 10px var(--ss-border);
+  }
+  50% {
+    text-shadow:
+      0 0 8px  var(--ss-border),
+      0 0 14px var(--ss-border),
+      0 0 20px var(--ss-border);
+  }
+  100% {
+    text-shadow:
+      0 0 3px  var(--ss-border),
+      0 0 6px  var(--ss-border),
+      0 0 10px var(--ss-border);
+  }
+}
+
+/* =========================================
+   BACKGROUND LAYER
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet .ss-char-main {
+  position: relative;
+  overflow: hidden; /* bg doesn’t spill outside */
+}
+
+/* Background <div> that sits behind everything */
+.spotlightsaga.sheet.characterSheet .ss-char-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Background image itself */
+.spotlightsaga.sheet.characterSheet .ss-char-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* Foreground content above bg */
+.spotlightsaga.sheet.characterSheet .ss-char-main > *:not(.ss-char-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inner content padding (tabs + body) */
+.spotlightsaga.sheet.characterSheet .ss-sheet-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   TYPOGRAPHY
+   ========================================= */
+
+/* .spotlightsaga.sheet.characterSheet h1,
+.spotlightsaga.sheet.characterSheet h2, */
+.spotlightsaga.sheet.characterSheet h3 {
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
+  color: var(--ss-text);
+  text-align: center;
+  margin: 6px 0 6px 0;
+  letter-spacing: 1px;
+  text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet h4 {
+  font-family: inherit;
+  color: var(--ss-text);
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  padding: 0;
+  letter-spacing: 1px;
+  text-shadow: var(--ss-darkGlow);
+}
+
+/* =========================================
+   Header
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet .ss-sheet-header {
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  z-index: 1;
+  display: flex;              /* make it flex */
+  flex-direction: column;     /* stack name + role vertically */
+  align-items: center;        /* center them horizontally */
+  text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-name-entry {
+  text-align: center;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-name-entry input[type="text"] {
+  font-family: "SpotLights", sans-serif;
+  font-size: 42px;
+  height: 100%;
+  color: var(--ss-selected);
+  text-align: center;
+  background: transparent;
+  outline: none;
+  border-color: transparent;
+  margin: -5px;
+    text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-role-as {
+  position: relative;
+  letter-spacing: normal;
+  top: -2px;
+  font-size: 12px;
+  margin-right: 6px;
+  text-transform: none;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-role-entry {
+  font-family: "IMPACT", sans-serif;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: var(--ss-border);
+  text-align: center;
+  letter-spacing: 0.2em;
+  align-content: center;
+  position: relative;
+  display: inline-block;
+    text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-name-entry::before{
+  margin-bottom: -6px;
+}
+.spotlightsaga.sheet.characterSheet .ss-name-entry::after{
+  margin-bottom: 2px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-name-entry::before,
+.spotlightsaga.sheet.characterSheet .ss-role-entry::after {
+  content: "✦ ✦ ✦";
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--ss-border);
+  opacity: 0.8;
+  text-align: center;
+}
+
+
+/* =========================================
+   PANELS & LAYOUT
+   ========================================= */
+
+/* General panel styling */
+.spotlightsaga.sheet.characterSheet .ss-panel {
+  border: 0;
+  padding: var(--ss-padding);
+  box-sizing: border-box;
+}
+
+/* 3-column top layout */
+.spotlightsaga.sheet.characterSheet .ss-grid-columns {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  align-items: start;
+  gap: 8px;
+}
+
+/* Each column stacks its panels */
+.spotlightsaga.sheet.characterSheet .ss-col {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+/* Field groups (labels + inputs) */
+.spotlightsaga.sheet.characterSheet .ss-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-field-group label {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* Inline groups (label + control on one row) */
+.spotlightsaga.sheet.characterSheet .ss-field-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-critical-label {
+  text-shadow: var(--ss-darkGlow);
+}
+
+/* =========================================
+   INPUT + TEXTAREA STYLES
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet input[type="text"],
+.spotlightsaga.sheet.characterSheet textarea {
+  background: var(--ss-lightTransparent);
+  border: 2px solid var(--ss-border);
+  color: var(--ss-text);
+  padding: 6px;
+  font-family: "Oswald", sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  resize: auto;
+}
+
+.spotlightsaga.sheet.characterSheet textarea:focus,
+.spotlightsaga.sheet.characterSheet input[type="text"]:focus {
+  border-color: var(--ss-selected);
+  outline: none;
+  box-shadow: var(--ss-lightGlow);
+}
+
+/* Single-line style for Edges, Flaws */
+.spotlightsaga.sheet.characterSheet .ss-panel-edgesflaws textarea {
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
+  line-height: 16px;
+  padding: 2px 4px;
+  resize: none;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-panel-complications textarea {
+  height: 41px;
+  min-height: 41px;
+  max-height: 41px;
+  line-height: 16px;
+  padding: 2px 4px;
+  resize: none;
+  margin-bottom: 1px;
+}
+
+/* =========================================
+   SPOTLIGHTS
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet .ss-main-header-box {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  align-items: center;
+  margin-top: -6px;
+}
+
+/* 3) Spotlights block: compact card */
+.spotlightsaga.sheet.characterSheet .ss-spotlights-block {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-spotlights-title {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Critical Spotlight block */
+.spotlightsaga.sheet.characterSheet .ss-critical-block {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;  
+}
+
+/* Wrapper */
+.ss-critical-box {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+/* Hide checkbox but allow clicks */
+.ss-critical-box input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Default: READY (you can earn it) */
+.ss-critical-box::before {
+  content: "✺";
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--ss-border);
+  opacity: 0.8;
+  text-shadow:
+    0 0 4px   var(--ss-border),
+    0 0 8px   var(--ss-border),
+    0 0 10px  var(--ss-border),
+    0 0 12px  #000,
+    0 0 14px  #000,
+    0 0 14px  var(--ss-selected);
+}
+
+/* Apply strike-through overlay when spent */
+.ss-critical-box::after {
+  content: "available";
+  color: var(--ss-selected);
+  font-size: 14px;
+  opacity: 0.8;
+  position: absolute;
+  top: 34px;
+  text-shadow: var(--ss-darkGlow);
+}
+
+.ss-role-box::before {
+  content: "";
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--ss-border);
+  opacity: 0.8;
+  animation: ss-glow-pulse 2.5s ease-in-out infinite;
+  transition: 150ms ease;
+}
+
+/* SPENT (checked): “broken” look */
+.ss-critical-box:has(input:checked)::before {
+  color: var(--ss-border);
+  opacity: 0.5;
+  text-shadow: var(--ss-lightGlow);
+  animation: none;
+}
+
+/* Apply strike-through overlay when spent */
+.ss-critical-box:has(input:checked)::after {
+  content: "unavailable";
+  color: #333;
+  text-shadow: none;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-spotlights-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Clickable symbol wrapper */
+.spotlightsaga.sheet.characterSheet .ss-spotlight-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Hide checkbox but keep it clickable */
+.spotlightsaga.sheet.characterSheet .ss-spotlight-box input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Symbol (unchecked) */
+.spotlightsaga.sheet.characterSheet .ss-spotlight-box::before {
+  content: "✺";
+  font-weight: bold;
+  font-size: 30px;
+  color: #555;
+  text-shadow:
+    0 0 4px #555,
+    0 0 8px #555,
+    0 0 8px #555;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: color 150ms ease, text-shadow 150ms ease, transform 150ms ease;
+}
+
+/* Symbol (checked + glow) */
+.spotlightsaga.sheet.characterSheet .ss-spotlight-box:has(input:checked)::before {
+  color: var(--ss-border);
+  text-shadow: var(--ss-strongGlow);
+  transform: scale(1.1);
+}
+
+/* Hide the "✺" base symbol for the role bonus box */
+.ss-role-box::before {
+  content: none !important;
+  text-shadow: none;
+}
+.ss-role-box:has(input:checked)::before {
+  content: none !important;
+}
+
+/* Style the Font Awesome masks icon */
+.ss-role-box i {
+  font-size: 26px;
+  color: var(--ss-border);
+  opacity: 0.8;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  transition: 150ms ease;
+  text-shadow: var(--ss-darkGlow);
+}
+
+/* When checked → behave same as spent critical spotlight */
+.ss-role-box:has(input:checked) i {
+  opacity: 0.7;
+  animation: none;
+  filter: grayscale(100%);
+}
+
+/* =========================================
+   PLOT ARMOR + COMPLICATIONS
+   ========================================= */
+
+/* Plot Armor container */
+
+.spotlightsaga.sheet.characterSheet .ss-plot-armor-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Plot armor shield slot */
+.spotlightsaga.sheet.characterSheet .ss-plot-box {
+  position: relative;
+  width: 40px;      
+  height: 40px;      
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 -4px 0;
+}
+
+/* Hide native checkbox but keep click area */
+.spotlightsaga.sheet.characterSheet .ss-plot-box input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Shield icon (unchecked) — hollow shield */
+.spotlightsaga.sheet.characterSheet .ss-plot-box:has(input:checked)::after {
+  content: "⛉";                 /* empty shield */
+  font-size: 37px;
+  font-weight: bold;
+  color: #999;
+  position: absolute;
+  opacity: 0.9;
+  text-shadow: none;
+}
+/* Shield icon (checked) — hollow shield */
+.spotlightsaga.sheet.characterSheet .ss-plot-box:not(:has(input:checked))::after {
+  content: "⚡︎";
+  font-size: 31px;
+  font-weight: bold;
+  color: #888;
+  position: absolute;
+  transform: scaleX(-1) translateY(-2px) translateX(-4px) rotate(-72deg);
+  text-shadow: none;
+}
+
+/* Shield icon (unchecked) — hollow shield */
+.spotlightsaga.sheet.characterSheet .ss-plot-box::before {
+  content: "⛉";                 /* empty shield */
+  font-size: 34px;
+  font-weight: bold;
+  color: #888;
+  position: absolute;
+  pointer-events: none;
+  transition:
+    color 150ms ease,
+    text-shadow 150ms ease,
+    transform 150ms ease;
+  text-shadow: none;
+}
+
+/* Shield icon (checked) — filled glowing shield */
+.spotlightsaga.sheet.characterSheet .ss-plot-box:has(input:checked)::before {
+  content: "⛊";                 /* filled shield */
+  color: #BBB;
+  text-shadow: 0 0 2px #000,
+  0 0 2px #000, 0 0 2px #001,
+  0 0 4px #333,
+  0 0 6px var(--ss-border),
+  0 0 8px var(--ss-selected);
+  transform: scale(1.05);
+}
+
+/* Number INSIDE shield */
+.spotlightsaga.sheet.characterSheet .ss-plot-box span {
+  position: relative;     /* sits above ::before */
+  z-index: 10;
+  font-size: 12px;
+  font-weight: bold;
+  color: #777;
+  pointer-events: none;  
+  line-height: 1;
+  text-shadow: none;
+}
+
+/* If the shield is unchecked, use lighter text */
+.spotlightsaga.sheet.characterSheet .ss-plot-box:not(:has(input:checked)) span {
+  color: #ccc;
+  text-shadow:
+    0 0 1px #000;
+}
+
+/* =========================================
+   TABS
+   ========================================= */
+.spotlightsaga.sheet.characterSheet .tab {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-bottom: 1rem;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tabs {
+  display: flex;
+  gap: 4px;
+  border-top:var(--ss-border) 8px double;
+  border-bottom:var(--ss-border) 8px double;
+  background-color: #666;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tabs .item {
+  position: relative;
+  width: 80px;
+  height: 28px;
+  border: 3px solid var(--ss-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--ss-text);
+  background: #777;
+  cursor: pointer;
+  padding: 0;                /* override old padding */
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tabs .item.active {
+  background: #AAA;
+  text-shadow: var(--ss-lightGlow);
+  color: #333;
+  border-color: var(--ss-selected);
+  box-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .content > .tab {
+  display: none;
+}
+
+.spotlightsaga.sheet.characterSheet .content > .tab.active {
+  display: block;
+  margin-top: 5px;
+}
+
+/* Top stars */
+.spotlightsaga.sheet.characterSheet .ss-tabs .item::before,
+.spotlightsaga.sheet.characterSheet .ss-tabs .item::after{
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgb(235, 66, 66);
+  white-space: nowrap;
+  text-shadow: var(--ss-darkGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tabs .item::before{
+  top: -14px;
+}
+.spotlightsaga.sheet.characterSheet .ss-tabs .item::after{
+  bottom: -14px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tabs .item:hover {
+  text-shadow: var(--ss-strongGlow);
+  color: var-(--ss-border);
+}
+
+/* =========================================
+   SKILLS
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet .ss-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  padding: 0;
+}
+
+/* Each skill tile */
+.spotlightsaga.sheet.characterSheet .ss-skill {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Skill heading */
+.spotlightsaga.sheet.characterSheet .ss-skill-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--ss-text);
+  letter-spacing: 1px;
+  text-shadow: var(--ss-darkGlow);
+  margin-bottom: 5px;
+}
+
+/* Input + buttons stacked vertically */
+.spotlightsaga.sheet.characterSheet .ss-skill-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Skill value input */
+.spotlightsaga.sheet.characterSheet .ss-skill-input {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  font-size: 18px;
+  color: var(--ss-text);
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid var(--ss-border);
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+  box-shadow: var(--ss-strongGlow);
+}
+
+
+/* Buttons row under the input */
+.spotlightsaga.sheet.characterSheet .ss-skill-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Raise the 1st and 3rd button slightly */
+.spotlightsaga.sheet.characterSheet .ss-skill-buttons .ss-skill-btn:nth-child(1),
+.spotlightsaga.sheet.characterSheet .ss-skill-buttons .ss-skill-btn:nth-child(3) {
+  position: relative;
+  top: -12px;          /* adjust height overlap here */
+  z-index: 5;         /* ensures it overlaps cleanly */
+}
+
+/* Icon buttons */
+.spotlightsaga.sheet.characterSheet .ss-skill-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border-color: var(--ss-border);
+  background: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: var(--ss-lightGlow);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-skill-btn i {
+  font-size: 14px;
+}
+
+/* Hover state */
+.spotlightsaga.sheet.characterSheet .ss-skill-btn:hover {
+  background: var(--ss-border);
+  color: #000;
+}
+
+/* =========================
+   Skill Allocation Panel
+   ========================= */
+
+/* Skills tab container should be positioned for absolute children */
+.spotlightsaga.sheet.characterSheet .ss-panel-skills {
+  position: relative;
+}
+
+/* Floating "allocation" button on top-right */
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-toggle {
+  position: absolute;
+  right: -25px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--ss-border);
+  background: var(--ss-bg);
+  color: var(--ss-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--ss-darkGlow);
+  z-index: 10;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-toggle i {
+  font-size: 14px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-toggle:hover {
+  background: var(--ss-border);
+  color: #000;
+}
+
+/* Allocation panel hidden by default */
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-panel {
+  display: none;
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid var(--ss-border);
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+
+/* When sheet is in allocation mode, show panel */
+.spotlightsaga.sheet.characterSheet.ss-allocation-mode .ss-skill-alloc-panel {
+  display: block;
+}
+
+/* Stats row */
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-stats {
+  display: flex;
+  gap: 12px;
+  margin: 6px 0;
+}
+
+/* Apply button */
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-apply {
+  margin-top: 4px;
+  border: 2px solid var(--ss-border);
+  background: transparent;
+  color: var(--ss-text);
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-skill-alloc-apply:hover {
+  background: var(--ss-border);
+  color: #000;
+}
+
+/* =========================
+   BIO TAB
+   ========================= */
+
+/* BIO layout: two columns */
+.spotlightsaga.sheet.characterSheet .ss-bio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* Portrait panel: center the portrait and limit size */
+.spotlightsaga.sheet.characterSheet .ss-panel-bio-portrait {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-portrait-box {
+  width: 240px;          /* choose size you like */
+  height: 240px;
+  border-radius: 50%;    /* <-- makes it round */
+  overflow: hidden;      /* hides corners of image */
+  border: 2px solid var(--ss-border);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: #FFF000 0 0 8px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-portrait-img {
+  width: 256px;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* BIO two-column row */
+.spotlightsaga.sheet.characterSheet .bio-row {
+  display: flex;
+  gap: 3px;
+}
+
+.spotlightsaga.sheet.characterSheet .bio-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Make the two fields split space equally */
+.spotlightsaga.sheet.characterSheet .bio-row .bio-field {
+  flex: 1;
+}
+
+.spotlightsaga.sheet.characterSheet .bio-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* =========================
+   NOTES TAB
+   ========================= */
+
+.spotlightsaga.sheet.characterSheet .ss-panel-notes h2 {
+  margin-bottom: 6px;
+}
+
+/* Each collapsible block */
+.spotlightsaga.sheet.characterSheet .ss-note-block {
+  border: 2px solid var(--ss-border);
+  margin-bottom: 6px;
+  background: var(--ss-lightTransparent);
+}
+
+/* Add our own little marker */
+.spotlightsaga.sheet.characterSheet .ss-note-block textarea {
+  border-radius: unset;
+  margin-bottom: -4px;
+  border-inline-width: 1px;
+  resize: vertical;
+}
+
+/* Summary bar */
+.spotlightsaga.sheet.characterSheet .ss-note-block > summary {
+  list-style: none;                 /* remove default triangle bullet */
+  padding: 4px 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Remove default triangle marker in some browsers */
+.spotlightsaga.sheet.characterSheet .ss-note-block > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Add our own little marker */
+.spotlightsaga.sheet.characterSheet .ss-note-block > summary::after {
+  content: "▼";
+  font-size: 10px;
+}
+
+/* Rotated marker when open */
+.spotlightsaga.sheet.characterSheet .ss-note-block[open] > summary::after {
+  content: "▲";
+}
+
+/* =========================
+   Chat Messages
+   ========================= */
+
+.chat-message {
+  margin: 3px;
+  color: var(--ss-text);
+  text-shadow: var(--ss-darkGlow);
+  background: none;
+  background-color: rgba(0, 0, 0, 0.45);;
+  border-color: var(--ss-border);
+  box-shadow: var(--ss-lightGlow);
+}
+
+.message-header {
+  font-size: 16px;
+  color: var(--ss-border);
+  text-shadow: var(--ss-darkGlow);
+}
+
+.ss-roll-card {
+  color: var(--ss-border);
+  font-family: "Oswald", sans-serif;
+  text-shadow:
+    0 0 2px #000,
+    0 0 4px #000;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ss-roll-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.ss-roll-main-col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ss-roll-header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.ss-roll-portrait {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--ss-border);
+  box-shadow: var(--ss-strongGlow);
+  image-rendering: auto;
+}
+
+.ss-roll-title {
+  margin: 0;
+  font-family: SpotLights, sans-serif;
+  color: var(--ss-text);
+  text-shadow:
+    0 0 1px #000,
+    0 0 3px var(--ss-selected);
+  font-size: clamp(16px, 3vw, 28px);
+  text-align: center;
+
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* New layout for requested roll card structure */
+.ss-roll-action {
+  font-size: 22px;
+  color: var(--ss-text);
+  display: flex;
+  align-items: center;
+}
+.ss-roll-action .fa-sharp { color: var(--ss-border); }
+
+.ss-roll-rolls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.ss-roll-total {
+  font-size: 40px;
+  font-weight: bold;
+  color: var(--ss-bg);
+  text-shadow: var(--ss-lightGlow);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  border: 2px solid var(--ss-border);
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+  box-shadow: var(--ss-strongGlow);
+  background: var(--ss-border);
+}
+.ss-roll-skill-label { font-weight: bold; color: var(--ss-border); }
+
+/* Bottom layer spanning full width under portrait + rolls */
+.ss-roll-bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.ss-roll-bottom > .ss-roll-breakdown,
+.ss-roll-bottom > .ss-roll-final {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* center content horizontally inside each column */
+}
+
+.ss-d6-display i {margin-right: 4px; margin-top:6px; font-size: 24px; color: var(--ss-bg); text-shadow: var(--ss-strongGlow); }
+.ss-roll-row { text-align: center; }
+.ss-roll-breakdown { display:flex; gap:10px; margin: 2px 0 8px 0; flex-direction: column; flex-wrap:wrap }
+.ss-pill { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.04); padding:2px 8px; border-radius:12px; font-size:15px; box-shadow: var(--ss-lightGlow); }
+.ss-roll-final {font-size: 20px; margin-top: 4px;}
+
+/* ============================================
+   Spotlight Saga - Themed Dialog Styling
+   ============================================ */
+
+body.game .app.window-app .window-content {
+  background: var(--ss-lightbg);
+  box-shadow: var(--ss-strongGlow);
+  color: var(--ss-text);
+  font-family: "Oswald", sans-serif;
+}
+
+.application.dialog.ss-themed-dialog {
+  --background: var(--ss-lightbg);
+  --color-header-background: rgba(0, 0, 0, 0.7);
+  --color-border: var(--ss-border);
+  color: var(--ss-text);
+}
+
+.application.dialog.ss-themed-dialog .standard-form {
+  gap:0px;
+}
+
+.application.dialog.ss-themed-dialog button {
+  --background: var(--ss-bg);
+  --color-header-background: rgba(0, 0, 0, 0.7);
+  --color-border: var(--ss-border);
+  --button-border-color: var(--ss-border);
+  --button-focus-outline-color: var(--ss-selected);
+  color: var(--ss-border);
+  text-shadow: var(--ss-darkGlow);
+}
+
+.application.dialog.ss-themed-dialog button:hover,
+.application.dialog.ss-themed-dialog button:focus {
+  box-shadow: var(--ss-lightGlow);
+}
+
+.application.dialog.ss-themed-dialog button:active {
+  box-shadow: var(--ss-strongGlow);
+}
+
+.application.dialog.ss-themed-dialog .window-content {
+  padding: 10px;
+}
+
+.ss-skill-options {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.ss-dialog-left,
+.ss-dialog-right {
+  flex: 0 0 auto;
+  align-content: center;
+  text-align: center;
+}
+
+.ss-dialog-right {
+  margin-top: 0px;
+}
+
+.ss-dialog-section {
+  margin-bottom: 14px;
+  text-shadow: var(--ss-darkGlow);
+  background: var(--ss-bg);
+}
+
+.ss-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.ss-checkbox input {
+  transform: scale(1);
+}
+
+.ss-number-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ss-num-input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  padding: 4px;
+  color: var(--ss-text);
+  background: var(--ss-roll-card-bg);
+  border: 1px solid var(--ss-border);
+  border-radius: 50%;
+}
+
+.ss-num-btn {
+  background: var(--ss-bg);;
+  border: 1px solid var(--ss-border);
+  color: var(--ss-text);
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  line-height: 26px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: var(--ss-lightGlow);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.ss-num-btn:hover {
+  background: var(--ss-selected);
+  color: black;
+  box-shadow: var(--ss-strongGlow);
+}
+
+/* Dialog buttons */
+.ss-themed-dialog .dialog-buttons button {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--ss-border);
+  color: var(--ss-text);
+  box-shadow: var(--ss-lightGlow);
+  font-size: 16px;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.ss-themed-dialog .dialog-buttons button:hover {
+  background: var(--ss-selected);
+  color: #000;
+  box-shadow: var(--ss-strongGlow);
+}
+
+
+/* =========================================
+   SCRABBLE / SPELL BUILDER
+   ========================================= */
+
+.spotlightsaga.sheet.characterSheet .ss-spell-builder {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-scrabble-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-scrabble-controls .ss-btn {
+  background: transparent;
+  border: 2px solid var(--ss-border);
+  color: var(--ss-text);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tile-rack {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px 0;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tile {
+  min-width: 30px;
+  height: 34px;
+  border: 2px solid var(--ss-border);
+  background: rgba(0,0,0,0.35);
+  color: var(--ss-text);
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-tile.selected {
+  box-shadow: var(--ss-strongGlow);
+  transform: translateY(-2px);
+}
+
+.spotlightsaga.sheet.characterSheet .ss-composed-display {
+  margin-top: 6px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-suggestions {
+  display: flex;
+  flex-direction: row;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-suggestion-listDE,
+.spotlightsaga.sheet.characterSheet .ss-suggestion-listEN {
+  margin: 6px 0 0 0;
+  padding-left: 18px;
+  max-height: 160px;
+  overflow: auto;
+  width: 50%
+}
+
+.spotlightsaga.sheet.characterSheet .ss-spell-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.spotlightsaga.sheet.characterSheet .ss-btn.ss-btn-primary {
+  background: var(--ss-border);
+  color: #000;
+}

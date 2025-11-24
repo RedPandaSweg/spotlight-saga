@@ -1,0 +1,92 @@
+{{!-- skills.hbs --}}
+<div class="ss-panel-skills">
+
+  {{!-- Floating button (top right of skills tab) --}}
+  <button type="button"
+          class="ss-skill-alloc-toggle"
+          data-action="startSkillAlloc"
+          title="Character Creation Skill Allocation">
+    <i class="fas fa-wand-magic-sparkles"></i>
+  </button>
+
+  {{!-- Allocation panel (hidden by default, shown in allocation mode) --}}
+  <div class="ss-skill-alloc-panel">
+    <h3>Skill Allocation</h3>
+
+    {{!-- Put your explanation text here --}}
+    <p class="ss-skill-alloc-text">
+      <!-- TODO: your explanation text here -->
+      Assign 16 points to skills. Two skills must be set to -1.
+    </p>
+
+    <div class="ss-skill-alloc-stats">
+      <div>
+        Points remaining:
+        <span class="ss-skill-alloc-points" data-points-remaining>16</span>
+      </div>
+      <div>
+        Skills at -1:
+        <span class="ss-skill-alloc-neg" data-neg-count>0</span> / 2
+      </div>
+    </div>
+
+    <button type="button"
+            class="ss-skill-alloc-apply"
+            data-action="applySkillAlloc">
+      Accept Skill Allocation
+    </button>
+  </div>
+
+  {{!-- Skills grid --}}
+
+  <div class="ss-skills-grid">
+    {{#each config.skills as |skill|}}
+      <div class="ss-skill" data-skill="{{skill.key}}">
+        <div class="ss-skill-name">{{skill.label}} <i class="fa-solid fa-{{skill.icon}}"></i></div>
+
+        <div class="ss-skill-body">
+          <input
+            type="number"
+            data-skill="{{skill.key}}"
+            name="system.skills.{{skill.key}}"
+            value="{{lookup ../system.skills skill.key}}"
+            min="-2"
+            max="8"
+            class="ss-skill-input"
+          />
+
+          <div class="ss-skill-buttons">
+            {{!-- 1) Normal skill roll --}}
+            <button type="button"
+                    class="ss-skill-btn"
+                    data-action="skillRoll"
+                    data-skill="{{skill.key}}"
+                    data-mode="normal"
+                    title="Roll {{skill.label}}">
+              <i class="fa-duotone fa-regular fa-cubes"></i>
+            </button>
+
+            {{!-- 2) Skill + Drama die --}}
+            <button type="button"
+                    class="ss-skill-btn"
+                    data-action="skillRoll"
+                    data-skill="{{skill.key}}"
+                    data-mode="drama"
+                    title="Roll {{skill.label}} + Drama Die">
+              <i class="fa-sharp-duotone fa-dice-d4"></i>
+            </button>
+
+            {{!-- 3) Extra options --}}
+            <button type="button"
+                    class="ss-skill-btn"
+                    data-action="skillOptions"
+                    data-skill="{{skill.key}}"
+                    title="{{skill.label}} options">
+              <i class="fas fa-ellipsis-vertical"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

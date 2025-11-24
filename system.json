@@ -1,25 +1,51 @@
 {
-    "name": "spotlight-saga",
+    "id": "spotlight-saga",
     "title": "Spotlight Saga",
-    "description": "A system for playing Spotlight Saga",
-    "author": "RedPandaSweg",
-    "version": 0.01,
-    "minimumCoreVersion": "13.351",
-    "compatibleCoreVersion": "13.351",
+    "description": "Nice Game",
+    "compatibility": {
+        "minimum": "13",
+        "verified": "13.350",
+        "maximum": "13"
+    },
+    "authors": [
+        {
+            "name": "RedPandaSweg"
+        }
+    ],
     "esmodules": [
         "spotlightsaga.js"
     ],
-    "styles":[
+    "styles": [
         "spotlightsaga.css"
     ],
-    "packs": [
-
+        "languages": [
+    {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+    }
     ],
-    "languages":[
-
-    ],
-    "gridDistance": 1,
-    "gridUnits": "m",
-    "primaryTokenAttribute": "PA",
-    "initiative": "1d20"
+    "documentTypes": {
+        "Actor": {
+            "character": {},
+            "_template": {}
+        },
+        "Item": {
+            "equippableItem": {},
+            "_equippableItemTemplate": {},
+            "subTemplate": {},
+            "userInputTemplate": {},
+            "activeEffectContainer": {}
+        }
+    },
+    "grid": {
+        "distance": 1,
+        "units": "m",
+        "type": 1,
+        "diagonals": 0
+    },
+    "url": "https://gitlab.com/custom-system-builder/custom-system-builder/",
+    "manifest": "https://gitlab.com/custom-system-builder/custom-system-builder/-/releases/permalink/latest/downloads/system.json",
+    "download": "https://gitlab.com/custom-system-builder/custom-system-builder/-/releases/5.0.2/downloads/custom-system-builder.zip",
+    "version": "0.01"
 }

@@ -1,0 +1,123 @@
+{{!-- main.hbs --}}
+<section class="ss-main-header-box">
+  
+  {{!-- SPOTLIGHTS BLOCK --}}
+  <div class="ss-spotlights-block">
+    <h3>Spotlights</h3>
+    <div class="ss-spotlights-row">
+      <label class="ss-spotlight-box">
+        <input type="checkbox"
+              name="system.spotlights.0"
+              {{checked system.spotlights.[0]}}>
+      </label>
+      <label class="ss-spotlight-box">
+        <input type="checkbox"
+              name="system.spotlights.1"
+              {{checked system.spotlights.[1]}}>
+      </label>
+      <label class="ss-spotlight-box">
+        <input type="checkbox"
+              name="system.spotlights.2"
+              {{checked system.spotlights.[2]}}>
+      </label>
+      <label class="ss-spotlight-box">
+        <input type="checkbox"
+              name="system.spotlights.3"
+              {{checked system.spotlights.[3]}}>
+      </label>
+      <label class="ss-spotlight-box">
+        <input type="checkbox"
+              name="system.spotlights.4"
+              {{checked system.spotlights.[4]}}>
+      </label>
+    </div>
+  </div>
+
+    <div class="ss-plot-armor">
+      <h3>Plot Armor</h3>
+      <div class="ss-plot-armor-boxes">
+        <label class="ss-plot-box">
+          <input type="checkbox"
+                  name="system.plotArmor.0"
+                  {{checked system.plotArmor.[0]}}>
+          <span>1</span>
+        </label>
+        <label class="ss-plot-box">
+          <input type="checkbox"
+                  name="system.plotArmor.1"
+                  {{checked system.plotArmor.[1]}}>
+          <span>2</span>
+        </label>
+        <label class="ss-plot-box">
+          <input type="checkbox"
+                  name="system.plotArmor.2"
+                  {{checked system.plotArmor.[2]}}>
+          <span>3</span>
+        </label>
+      </div>
+    </div>
+
+  {{!-- 4) CRITICAL SPOTLIGHT --}}
+  <div class="ss-critical-block">
+    <span class="ss-critical-label">Critical Spotlight</span>
+    <label class="ss-critical-box">
+      <input type="checkbox"
+            name="system.criticalSpotlight"
+            {{checked system.criticalSpotlight}}>
+    </label>
+  </div>
+
+{{!-- 2) Role BONUS --}}
+<div class="ss-critical-block">
+  <span class="ss-critical-label">+3 Role Cue</span>
+
+  <label class="ss-critical-box ss-role-box">
+    <input type="checkbox"
+           name="system.roleBonus"
+           {{checked system.roleBonus}}>
+    <i class="fas fa-theater-masks"></i>
+  </label>
+</div>
+
+</section>
+
+{{!-- 3 columns: left / center / right --}}
+{{!-- xxxxxxxxxxxx MAIN xxxxxxxxxxxxxx --}}
+{{!-- 3 columns: left / center / right --}}
+<div class="ss-grid-columns">
+
+  {{!-- Edges --}}
+  <div class="ss-col">
+    <section class="ss-panel-edgesflaws">
+      <h3>Edges</h3>
+      <textarea name="system.edges.0">{{system.edges.[0]}}</textarea>
+      <textarea name="system.edges.1">{{system.edges.[1]}}</textarea>
+      <textarea name="system.edges.2">{{system.edges.[2]}}</textarea>
+      <textarea name="system.edges.3">{{system.edges.[3]}}</textarea>
+      <textarea name="system.edges.4">{{system.edges.[4]}}</textarea>
+    </section>
+  </div>
+
+  {{!-- Complications --}}
+  <div class="ss-col">
+    <section class="ss-panel-complications">
+      <h3>Complications</h3>
+      <textarea name="system.complications.0">{{system.complications.[0]}}</textarea>
+      <textarea name="system.complications.1">{{system.complications.[1]}}</textarea>
+      <textarea name="system.complications.2">{{system.complications.[2]}}</textarea>
+    </section>
+  </div>
+
+  {{!-- Flaws --}}
+  <div class="ss-col">
+    <section class="ss-panel-edgesflaws">
+      <h3>Flaws</h3>
+      <textarea name="system.flaws.0">{{system.flaws.[0]}}</textarea>
+      <textarea name="system.flaws.1">{{system.flaws.[1]}}</textarea>
+      <textarea name="system.flaws.2">{{system.flaws.[2]}}</textarea>
+      <textarea name="system.flaws.3">{{system.flaws.[3]}}</textarea>
+      <textarea name="system.flaws.4">{{system.flaws.[4]}}</textarea>
+    </section>
+  </div>
+
+</div> {{!-- end .ss-grid-columns --}}

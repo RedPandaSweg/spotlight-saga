@@ -1,0 +1,64 @@
+{{!-- bio.hbs --}}
+<div class="ss-bio-grid">
+
+    {{!-- LEFT: Portrait --}}
+    <section class="ss-panel ss-panel-bio-portrait">
+      <div class="ss-portrait-box profile-img">
+        <img
+          class="ss-portrait-img"
+          src="{{actor.img}}"
+          data-action="editImage"
+          data-field="img"
+          title="{{actor.name}}"
+          alt="{{actor.name}} portrait"
+        />
+      </div>
+    </section>
+
+    {{!-- RIGHT: Bio fields --}}
+    <section class="ss-panel ss-panel-bio">
+      <div class="bio-fields">
+
+        {{!-- ROLE --}}
+        <div class="bio-field">
+            <label for="system.role">Role</label>
+            <input type="text" name="system.bio.role" value="{{system.bio.role}}">
+        </div>
+
+        {{!-- AGE + SIZE in one row --}}
+        <div class="bio-row">
+          <div class="bio-field">
+            <label>Age</label>
+            <input type="text" name="system.bio.age" value="{{system.bio.age}}">
+          </div>
+
+          <div class="bio-field">
+            <label>Size</label>
+            <input type="text" name="system.bio.size" value="{{system.bio.size}}">
+          </div>
+        </div>
+
+        {{!-- Race --}}
+        <div class="bio-field">
+          <label>Race</label>
+          <input type="text" name="system.bio.race" value="{{system.bio.race}}">
+        </div>
+
+        {{!-- Origin / Homeland --}}
+        <div class="bio-field">
+          <label>Origin / Homeland</label>
+          <input type="text" name="system.bio.origin" value="{{system.bio.origin}}">
+        </div>
+
+      </div>
+    </section>
+
+  </div>  {{!-- end .ss-bio-grid --}}
+
+  {{!-- Full-width background story, underneath both columns --}}
+  <section class="ss-panel ss-panel-bio-background">
+    <details class="ss-note-block" open>
+      <summary>Background Story</summary>
+      <textarea name="system.bio.background">{{system.bio.background}}</textarea>
+    </details>
+  </section>
